@@ -14,6 +14,13 @@
  * outputPath默认为"./cfg/Res.js"。
  */
 
+
+
+/**
+ * the class of Resource Generator.
+ * @param {Array} dirCfgList  		dir config list
+ * @param {String} outputPath 	the output file path
+ */
 var ResGen = function(dirCfgList, outputPath){
 	var _dirCfgList = dirCfgList || [];
 	var _outputPath = outputPath || "./cfg/Res.js";
