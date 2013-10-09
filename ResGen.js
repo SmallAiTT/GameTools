@@ -16,7 +16,7 @@
 
 var ResGen = function(dirCfgList, outputPath){
 	var _dirCfgList = dirCfgList || [];
-	var _outputPath = outputPath || "./cfg/Res.js";
+	var _outputPath = outputPath || "cfg/Res.js";
 
 	var _fs = require("fs");
 	var _resArr = [];
@@ -27,10 +27,18 @@ var ResGen = function(dirCfgList, outputPath){
 		"xml", "fnt", "tmx", "tsx", "ccbi", "font", "txt", "vsh", "fsh", "json", "js"
 	];
 
+    this.projDir = "../";
+
 	this._walkDir = function(dir, pre){
-		if(!_fs.existsSync(dir)) return;
+		if(!_fs.existsSync(dir)) {
+            console.log(dir + "    not exists!")
+            return;
+        }
 		stats = _fs.statSync(dir);
-		if(!stats.isDirectory()) return;
+		if(!stats.isDirectory()) {
+            console.log(dir + "    is not a directory!")
+            return;
+        }
 		var dirList = _fs.readdirSync(dir);
 		for(var i = 0, l = dirList.length; i < l; ++i){
 			var item = dirList[i];
@@ -60,30 +68,29 @@ var ResGen = function(dirCfgList, outputPath){
 		console.log("+++++++++++++gen Start+++++++++++++++++");
 		for(var i = 0, l = _dirCfgList.length; i < l; ++i){
 			var cfg = _dirCfgList[i];
-			var base = "./";
 			var dir = cfg, pre = "";
 			var strs = cfg.split("->");
 			if(strs.length == 2){
 				dir = strs[0];
 				pre = strs[1];
 			}
-			this._walkDir(base + dir, base + pre);
+			this._walkDir(this.projDir + dir, this.projDir + pre);
 		}
 
-
-		var b = _fs.writeFileSync(_outputPath, "", "utf-8");//先清空文件内容
+        var outputPath = this.projDir + _outputPath;
+		var b = _fs.writeFileSync(outputPath, "", "utf-8");//先清空文件内容
 		if(b) {
-			console.log("output err: " + _outputPath);
+			console.log("output err: " + outputPath);
 		}else{
 			var wOption = {
 			  flags: 'a',
 			  encoding: null,
 			  mode: 0666   
 			}
-			var fws = _fs.createWriteStream(_outputPath,wOption);
+			var fws = _fs.createWriteStream(outputPath,wOption);
 			fws.write("var Res = {\r\n");
 			for(var i = 0, l = _resArr.length; i < l; ++i){
-				fws.write("    " + _resKeyArr[i] + " = '" + _resArr[i] + "'");
+				fws.write("    " + _resKeyArr[i] + " : '" + _resArr[i] + "'");
 				if(i < l - 1) fws.write(",");
 				fws.write("\r\n");
 			}
@@ -97,5 +104,10 @@ var ResGen = function(dirCfgList, outputPath){
 	};
 };
 
+//Config your resources directorys here.
 var resGen = new ResGen(["res->res/", "src", "test", "../tt/src->../tt/"]);
+
+//If you put this script in your project root, you can ignore this, then the projDir should be "./".
+resGen.projDir = "./testDir/Proj/";
+
 resGen.gen();
