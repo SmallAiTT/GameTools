@@ -72,7 +72,7 @@ var ResGen = function(dirCfgList, outputPath){
 		console.log("|        Author: Small                  |");
 		console.log("|        Version: 1.0.0                 |");
 		console.log("|---------------------------------------|");
-		console.log("+++++++++++++gen Start+++++++++++++++++");
+		console.log("+++++++++++++++gen starts++++++++++++++++");
 		for(var i = 0, l = _dirCfgList.length; i < l; ++i){
 			var cfg = _dirCfgList[i];
 			var dir = cfg, pre = "";
@@ -107,7 +107,7 @@ var ResGen = function(dirCfgList, outputPath){
 		_resArr = [];
 		_resKeyArr = [];
 		console.log("success!")
-		console.log("+++++++++++++gen End+++++++++++++++++++");
+		console.log("+++++++++++++++gen ends++++++++++++++++++");
 	};
 };
 
