@@ -40,7 +40,7 @@ function transSopValue(value, ws){
     value = value.trim();
     value = value.substring(1, value.length - 1);
     mutiV(value, ws);
-    ws.write("}}");
+    ws.write("}");
 }
 function wrapKey(arr){
     for(var i = 0, l = arr.length; i < l; ++i){
