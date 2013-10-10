@@ -85,6 +85,10 @@ var ResGen = function(dirCfgList, outputPath){
 		}
 
         var outputPath = this.projDir + _outputPath;
+        if(!_fs.existsSync(outputPath)){
+            console.log(outputPath + "    not exists!");
+            return;
+        }
 		var b = _fs.writeFileSync(outputPath, "", "utf-8");//先清空文件内容
 		if(b) {
 			console.log("output err: " + outputPath);
@@ -115,6 +119,6 @@ var ResGen = function(dirCfgList, outputPath){
 var resGen = new ResGen(["res->res/", "src", "test", "../tt/src->../tt/"]);
 
 //If you put this script in your project root, you can ignore this, then the projDir should be "./".
-resGen.projDir = "./testDir/Proj/";
+resGen.projDir = "../../testDir/Proj/";
 
 resGen.gen();
