@@ -61,6 +61,8 @@ var ResGen = function(dirCfgList, outputPath){
 				_resArr.push(path.substring(pre.length));
 				var key = item.replace(/[.]/g, "_");
 				key = key.replace(/[\-]/g, "_");
+                var r = key.match(/^[0-9]/);
+                if(r != null) key = "_" + key;
 				_resKeyArr.push(key);
 			}		
 		}

@@ -14,7 +14,7 @@ var flag = 0;
 function mutiV(v, ws){
     var arr = v.split(",");
     for(var i = 0, l = arr.length; i < l; ++i){
-        arr[i] = parseFloat(arr[i]) * factor;
+        arr[i] = Math.round(parseFloat(arr[i]) * factor);
     }
     ws.write(arr.join(","));
 };
