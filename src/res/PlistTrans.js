@@ -7,7 +7,18 @@
  */
 
 var fs = require("fs");
-var lineReader = require("line-reader");
+var lineReader = null;
+try{
+    lineReader = require("line-reader");
+}catch(e){
+    console.log(e);
+    console.log("If you are using command line, please exec command first:")
+    console.log("npm install line-reader -g.");
+    console.log("Or add 'line-reader':'*' into your package.json .");
+    console.log("npm install line-reader -g can not work while run with Webstorm");
+    return;
+}
+
 var factor = 320/480;
 
 var flag = 0;
