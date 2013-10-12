@@ -4,6 +4,7 @@
   "private": false,
   "dependencies": {
     "xmlreader": "*",
-    "line-reader" : "*"
+    "line-reader" : "*",
+      "xml2js" : "*"
   }
 }

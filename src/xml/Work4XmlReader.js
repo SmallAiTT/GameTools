@@ -19,3 +19,4 @@ xmlReader.read(xmlStr, function(err, res){
     console.log(res.response.text());
     console.log(res.response.attributes());
 });
+
