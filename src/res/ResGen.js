@@ -21,11 +21,12 @@
  * @param {Array} dirCfgList  		dir config list
  * @param {String} outputPath 	the output file path
  */
+var fs = require("fs");
+
 var ResGen = function(dirCfgList, outputPath){
 	var _dirCfgList = dirCfgList || [];
 	var _outputPath = outputPath || "cfg/Res.js";
 
-	var _fs = require("fs");
 	var _resArr = [];
 	var _resKeyArr = [];
 
@@ -37,20 +38,20 @@ var ResGen = function(dirCfgList, outputPath){
     this.projDir = "../";
 
 	this._walkDir = function(dir, pre){
-		if(!_fs.existsSync(dir)) {
+		if(!fs.existsSync(dir)) {
             console.log(dir + "    not exists!")
             return;
         }
-		stats = _fs.statSync(dir);
+		stats = fs.statSync(dir);
 		if(!stats.isDirectory()) {
             console.log(dir + "    is not a directory!")
             return;
         }
-		var dirList = _fs.readdirSync(dir);
+		var dirList = fs.readdirSync(dir);
 		for(var i = 0, l = dirList.length; i < l; ++i){
 			var item = dirList[i];
 			var path = dir + "/" + item;
-			if(_fs.statSync(path).isDirectory())
+			if(fs.statSync(path).isDirectory())
 				this._walkDir(path, pre);
 			else{
 				var index = item.lastIndexOf(".");
@@ -87,11 +88,11 @@ var ResGen = function(dirCfgList, outputPath){
 		}
 
         var outputPath = this.projDir + _outputPath;
-        if(!_fs.existsSync(outputPath)){
+        if(!fs.existsSync(outputPath)){
             console.log(outputPath + "    not exists!");
             return;
         }
-		var b = _fs.writeFileSync(outputPath, "", "utf-8");//先清空文件内容
+		var b = fs.writeFileSync(outputPath, "", "utf-8");//先清空文件内容
 		if(b) {
 			console.log("output err: " + outputPath);
 		}else{
@@ -100,7 +101,7 @@ var ResGen = function(dirCfgList, outputPath){
 			  encoding: null,
 			  mode: 0666   
 			}
-			var fws = _fs.createWriteStream(outputPath,wOption);
+			var fws = fs.createWriteStream(outputPath,wOption);
 			fws.write("var Res = {\r\n");
 			for(var i = 0, l = _resArr.length; i < l; ++i){
 				fws.write("    " + _resKeyArr[i] + " : '" + _resArr[i] + "'");
